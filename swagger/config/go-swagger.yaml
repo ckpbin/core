@@ -1,0 +1,46 @@
+layout:
+  application:
+  #   - name: configure
+  #     source: config.gotmpl
+  #     target: "{{ joinFilePath .Target .ServerPackage }}"
+  #     file_name: config.go
+  #     skip_exists: false
+  #     skip_format: false
+    - name: embedded_spec
+      source: asset:swaggerJsonEmbed
+      target: "{{ joinFilePath .Target .ServerPackage }}"
+      file_name: "swagger.go"
+      skip_exists: false
+      skip_format: false
+    - name: server
+      source: service.gotmpl
+      target:  "{{ joinFilePath .Target .ServerPackage }}"
+      file_name: "service.go"
+      skip_exists: false
+      skip_format: false
+    - name: server
+      source: router.gotmpl
+      target:  "{{ joinFilePath .Target .ServerPackage }}"
+      file_name: "router.go"
+      skip_exists: false
+      skip_format: false
+  operations:
+    - name: parameters
+      source: parameter.gotmpl
+      target: "{{ if gt (len .Tags) 0 }}{{ joinFilePath .Target .ServerPackage .APIPackage .Package  }}{{ else }}{{ joinFilePath .Target .ServerPackage .Package  }}{{ end }}"
+      file_name: "{{ (snakize (pascalize .Name)) }}_parameters.go"
+      skip_exists: false
+      skip_format: false
+    # - name: responses
+    #   source: responses.gotmpl
+    #   target: "{{ if gt (len .Tags) 0 }}{{ joinFilePath .Target .ServerPackage .APIPackage .Package  }}{{ else }}{{ joinFilePath .Target .ServerPackage .Package  }}{{ end }}"
+    #   file_name: "{{ (snakize (pascalize .Name)) }}_responses.go"
+    #   skip_exists: false
+    #   skip_format: false
+  models:
+    - name: definition
+      source: asset:model
+      target: "{{ joinFilePath .Target .ModelPackage }}"
+      file_name: "{{ (snakize (pascalize .Name)) }}.go"
+      skip_exists: false
+      skip_format: false
