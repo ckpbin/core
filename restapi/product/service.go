@@ -9,7 +9,7 @@ import (
 	"github.com/ckpbin/response"
 	"github.com/labstack/echo/v4"
 
-	operations "github.com/ckpbin/core/product/operations"
+	operations "github.com/ckpbin/core/restapi/product/operations"
 )
 
 // Service is the interface that must be implemented in order to provide

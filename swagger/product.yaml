@@ -16,6 +16,8 @@ consumes:
 paths:
   /products:
     get:
+      security:
+        - Bearer: []
       operationId: getProducts
       parameters:
         - $ref: '#/parameters/limit'

@@ -6,7 +6,7 @@ package product
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	operations "github.com/ckpbin/core/product/operations"
+	operations "github.com/ckpbin/core/restapi/product/operations"
 	"github.com/labstack/echo/v4"
 )
 

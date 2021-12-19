@@ -1,4 +1,4 @@
-module github.com/ckpbin/core/product
+module github.com/ckpbin/core/restapi/auth
 
 go 1.16
 
@@ -10,5 +10,4 @@ require (
 	github.com/go-openapi/swag v0.19.15
 	github.com/go-openapi/validate v0.20.3
 	github.com/labstack/echo/v4 v4.6.1
-	github.com/mailru/easyjson v0.7.7 // indirect
 )
