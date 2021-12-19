@@ -1,4 +1,4 @@
-module github.com/ckpbin/core/restapi/auth
+module github.com/ckpbin/swagger/restapi/auth
 
 go 1.16
 

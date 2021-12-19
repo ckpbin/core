@@ -14,10 +14,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// PostRegisterPayload post register payload
+// PostRegister post register
 //
-// swagger:model PostRegisterPayload
-type PostRegisterPayload struct {
+// swagger:model PostRegister
+type PostRegister struct {
 
 	// email
 	// Required: true
@@ -31,12 +31,11 @@ type PostRegisterPayload struct {
 
 	// username
 	// Required: true
-	// Format: uuid
-	Username *strfmt.UUID `json:"username"`
+	Username *string `json:"username"`
 }
 
-// Validate validates this post register payload
-func (m *PostRegisterPayload) Validate(formats strfmt.Registry) error {
+// Validate validates this post register
+func (m *PostRegister) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEmail(formats); err != nil {
@@ -57,7 +56,7 @@ func (m *PostRegisterPayload) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PostRegisterPayload) validateEmail(formats strfmt.Registry) error {
+func (m *PostRegister) validateEmail(formats strfmt.Registry) error {
 
 	if err := validate.Required("email", "body", m.Email); err != nil {
 		return err
@@ -70,7 +69,7 @@ func (m *PostRegisterPayload) validateEmail(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PostRegisterPayload) validatePassword(formats strfmt.Registry) error {
+func (m *PostRegister) validatePassword(formats strfmt.Registry) error {
 
 	if err := validate.Required("password", "body", m.Password); err != nil {
 		return err
@@ -83,26 +82,22 @@ func (m *PostRegisterPayload) validatePassword(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PostRegisterPayload) validateUsername(formats strfmt.Registry) error {
+func (m *PostRegister) validateUsername(formats strfmt.Registry) error {
 
 	if err := validate.Required("username", "body", m.Username); err != nil {
 		return err
 	}
 
-	if err := validate.FormatOf("username", "body", "uuid", m.Username.String(), formats); err != nil {
-		return err
-	}
-
 	return nil
 }
 
-// ContextValidate validates this post register payload based on context it is used
-func (m *PostRegisterPayload) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this post register based on context it is used
+func (m *PostRegister) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *PostRegisterPayload) MarshalBinary() ([]byte, error) {
+func (m *PostRegister) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -110,8 +105,8 @@ func (m *PostRegisterPayload) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *PostRegisterPayload) UnmarshalBinary(b []byte) error {
-	var res PostRegisterPayload
+func (m *PostRegister) UnmarshalBinary(b []byte) error {
+	var res PostRegister
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

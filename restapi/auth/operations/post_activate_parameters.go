@@ -6,6 +6,7 @@ package operations
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"io"
 	"net/http"
 
 	"github.com/ckpbin/response"
@@ -17,12 +18,12 @@ import (
 	"github.com/ckpbin/swagger/restapi/auth/definitions"
 )
 
-// PostRegisterEndpoint executes the core logic of the related
+// PostActivateEndpoint executes the core logic of the related
 // route endpoint.
-func PostRegisterEndpoint(handler func(c echo.Context, params *PostRegisterParams) *response.Response) echo.HandlerFunc {
+func PostActivateEndpoint(handler func(c echo.Context, params *PostActivateParams) *response.Response) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// generate params from request
-		params := NewPostRegisterParams()
+		params := NewPostActivateParams()
 		problem := response.Problem{}
 		if err := params.readRequest(c); err != nil {
 			switch e := err.(type) {
@@ -54,35 +55,41 @@ func PostRegisterEndpoint(handler func(c echo.Context, params *PostRegisterParam
 	}
 }
 
-// NewPostRegisterParams creates a new PostRegisterParams object
+// NewPostActivateParams creates a new PostActivateParams object
 // with the default values initialized.
-func NewPostRegisterParams() *PostRegisterParams {
+func NewPostActivateParams() *PostActivateParams {
 	var ()
-	return &PostRegisterParams{}
+	return &PostActivateParams{}
 }
 
-// PostRegisterParams contains all the bound params for the post register operation
+// PostActivateParams contains all the bound params for the post activate operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters postRegister
-type PostRegisterParams struct {
+// swagger:parameters postActivate
+type PostActivateParams struct {
 
 	/*
+	  Required: true
 	  In: body
 	*/
-	Payload *definitions.PostRegister
+	Payload *definitions.PostActivate
 }
 
 // readRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls
-func (o *PostRegisterParams) readRequest(ctx echo.Context) error {
+func (o *PostActivateParams) readRequest(ctx echo.Context) error {
 	var res []error
 	formats := strfmt.NewFormats()
 
 	if runtime.HasBody(ctx.Request()) {
-		var body definitions.PostRegister
+		var body definitions.PostActivate
 		if err := ctx.Bind(&body); err != nil {
-			res = append(res, errors.NewParseError("payload", "body", "", err))
+			if err == io.EOF {
+				res = append(res, errors.Required("payload", "body", ""))
+			} else {
+				res = append(res, errors.NewParseError("payload", "body", "", err))
+			}
+
 		} else {
 			if err := body.Validate(formats); err != nil {
 				res = append(res, err)
@@ -93,6 +100,8 @@ func (o *PostRegisterParams) readRequest(ctx echo.Context) error {
 			}
 		}
 
+	} else {
+		res = append(res, errors.Required("payload", "body", ""))
 	}
 
 	if len(res) > 0 {

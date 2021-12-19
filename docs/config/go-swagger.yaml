@@ -6,19 +6,19 @@ layout:
   #     file_name: config.go
   #     skip_exists: false
   #     skip_format: false
-    - name: embedded_spec
-      source: asset:swaggerJsonEmbed
-      target: "{{ joinFilePath .Target .ServerPackage }}"
-      file_name: "swagger.go"
-      skip_exists: false
-      skip_format: false
+    # - name: embedded_spec
+    #   source: asset:swaggerJsonEmbed
+    #   target: "{{ joinFilePath .Target .ServerPackage }}"
+    #   file_name: "swagger.go"
+    #   skip_exists: false
+    #   skip_format: false
     - name: server
       source: service.gotmpl
       target:  "{{ joinFilePath .Target .ServerPackage }}"
       file_name: "service.go"
       skip_exists: false
       skip_format: false
-    - name: server
+    - name: router
       source: router.gotmpl
       target:  "{{ joinFilePath .Target .ServerPackage }}"
       file_name: "router.go"

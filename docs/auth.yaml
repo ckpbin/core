@@ -8,25 +8,70 @@ schemes:
   - http
   - https
 host: localhost:8080
-basePath: /
+basePath: /auth
 produces:
   - application/json
 consumes:
   - application/json
 paths:
-  /auth/register:
+  /register:
     post:
       operationId: postRegister
       parameters:
         - in: body
           name: payload
           schema:
-            $ref: '#/definitions/PostRegisterPayload'
+            $ref: '#/definitions/PostRegister'
       responses:
         '200':
           description: Show all list products
           schema:
             type: object
+  /login:
+    post:
+      operationId: postLogin
+      parameters:
+        - in: body
+          name: payload
+          schema:
+            $ref: '#/definitions/PostLogin'
+      responses:
+        '200':
+          description: OK
+  /password/reset:
+    post:
+      operationId: postPasswordReset
+      parameters:
+        - in: body
+          name: payload
+          schema:
+            $ref: '#/definitions/PostPasswordReset'
+      responses:
+        '200':
+          description: OK
+  /password/change:
+    post:
+      operationId: postPasswordChange
+      parameters:
+        - in: body
+          name: payload
+          schema:
+            $ref: '#/definitions/PostPasswordChange'
+      responses:
+        '200':
+          description: OK
+  /activate:
+    post:
+      operationId: postActivate
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          schema:
+            $ref: '#/definitions/PostActivate'
+      responses:
+        '200':
+          description: OK
 
 definitions:
   HttpError:
@@ -85,8 +130,18 @@ definitions:
       key:
         description: Key of field failing validation
         type: string
-
-  PostRegisterPayload:
+  PostLogin:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+        format: password
+  PostRegister:
     type: object
     required:
       - username
@@ -95,10 +150,42 @@ definitions:
     properties:
       username:
         type: string
-        format: uuid
       email:
         type: string
         format: email
       password:
         type: string
         format: password
+  PostPasswordReset:
+    type: object
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        format: email
+  PostPasswordChange:
+    type: object
+    required:
+      - token
+      - password
+      - new_password
+      - new_password_confirm
+    properties:
+      token:
+        type: string
+        format: uuid
+      password:
+        type: string
+      new_password:
+        type: string
+      new_password_confirm:
+        type: string
+  PostActivate:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        format: uuid

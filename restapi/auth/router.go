@@ -6,13 +6,17 @@ package auth
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	operations "github.com/ckpbin/core/restapi/auth/operations"
+	operations "github.com/ckpbin/swagger/restapi/auth/operations"
 	"github.com/labstack/echo/v4"
 )
 
 func Router(r *echo.Echo, service Service) {
 	// setup all service routes after the authenticate middleware has been
 	// initialized.
-	r.POST("/auth/register", operations.PostRegisterEndpoint(service.PostRegister))
+	r.POST("/activate", operations.PostActivateEndpoint(service.PostActivate))
+	r.POST("/login", operations.PostLoginEndpoint(service.PostLogin))
+	r.POST("/password/change", operations.PostPasswordChangeEndpoint(service.PostPasswordChange))
+	r.POST("/password/reset", operations.PostPasswordResetEndpoint(service.PostPasswordReset))
+	r.POST("/register", operations.PostRegisterEndpoint(service.PostRegister))
 
 }

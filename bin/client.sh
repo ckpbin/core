@@ -3,7 +3,7 @@
 SERVICE=$1
 
 swagger generate client \
-  --spec=swagger/$SERVICE.yaml \
+  --spec=docs/$SERVICE.yaml \
   --client-package=restclient/$SERVICE \
   --model-package=restclient/$SERVICE/definitions
 

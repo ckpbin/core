@@ -9,12 +9,16 @@ import (
 	"github.com/ckpbin/response"
 	"github.com/labstack/echo/v4"
 
-	operations "github.com/ckpbin/core/restapi/auth/operations"
+	operations "github.com/ckpbin/swagger/restapi/auth/operations"
 )
 
 // Service is the interface that must be implemented in order to provide
 // business logic for the Server service.
 type Service interface {
 	Healthy() bool
+	PostActivate(ctx echo.Context, params *operations.PostActivateParams) *response.Response
+	PostLogin(ctx echo.Context, params *operations.PostLoginParams) *response.Response
+	PostPasswordChange(ctx echo.Context, params *operations.PostPasswordChangeParams) *response.Response
+	PostPasswordReset(ctx echo.Context, params *operations.PostPasswordResetParams) *response.Response
 	PostRegister(ctx echo.Context, params *operations.PostRegisterParams) *response.Response
 }

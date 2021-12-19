@@ -17,12 +17,12 @@ import (
 	"github.com/ckpbin/swagger/restapi/auth/definitions"
 )
 
-// PostRegisterEndpoint executes the core logic of the related
+// PostLoginEndpoint executes the core logic of the related
 // route endpoint.
-func PostRegisterEndpoint(handler func(c echo.Context, params *PostRegisterParams) *response.Response) echo.HandlerFunc {
+func PostLoginEndpoint(handler func(c echo.Context, params *PostLoginParams) *response.Response) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// generate params from request
-		params := NewPostRegisterParams()
+		params := NewPostLoginParams()
 		problem := response.Problem{}
 		if err := params.readRequest(c); err != nil {
 			switch e := err.(type) {
@@ -54,33 +54,33 @@ func PostRegisterEndpoint(handler func(c echo.Context, params *PostRegisterParam
 	}
 }
 
-// NewPostRegisterParams creates a new PostRegisterParams object
+// NewPostLoginParams creates a new PostLoginParams object
 // with the default values initialized.
-func NewPostRegisterParams() *PostRegisterParams {
+func NewPostLoginParams() *PostLoginParams {
 	var ()
-	return &PostRegisterParams{}
+	return &PostLoginParams{}
 }
 
-// PostRegisterParams contains all the bound params for the post register operation
+// PostLoginParams contains all the bound params for the post login operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters postRegister
-type PostRegisterParams struct {
+// swagger:parameters postLogin
+type PostLoginParams struct {
 
 	/*
 	  In: body
 	*/
-	Payload *definitions.PostRegister
+	Payload *definitions.PostLogin
 }
 
 // readRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls
-func (o *PostRegisterParams) readRequest(ctx echo.Context) error {
+func (o *PostLoginParams) readRequest(ctx echo.Context) error {
 	var res []error
 	formats := strfmt.NewFormats()
 
 	if runtime.HasBody(ctx.Request()) {
-		var body definitions.PostRegister
+		var body definitions.PostLogin
 		if err := ctx.Bind(&body); err != nil {
 			res = append(res, errors.NewParseError("payload", "body", "", err))
 		} else {
